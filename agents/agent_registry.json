@@ -1,0 +1,119 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-09-02",
+  "coaching_enabled": true,
+  "agents": {
+    "governance_agent": {
+      "priority": 1,
+      "handles": ["Förvaltningsberättelse", "Styrelsen", "Valberedning", "Årsstämma"],
+      "description": "Extracts board, management, and organizational data",
+      "prompt": "Extrahera styrelseinformation från denna svenska BRF årsredovisning.\nSök efter: styrelseordförande, styrelseledamöter, suppleanter, kassör, sekreterare, valberedning, revisor, revisionsbolag.\nIdentifiera alla namn på personer och deras roller. Notera valperioder och mandattider.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"chairman\": \"namn på ordförande\",\n  \"board_members\": [\n    {\"name\": \"fullständigt namn\", \"role\": \"Ledamot/Suppleant/Kassör/Sekreterare\", \"elected\": \"YYYY\"}\n  ],\n  \"auditor_name\": \"revisorns namn\",\n  \"audit_firm\": \"revisionsbolag (Grant Thornton/PwC/KPMG/Ernst & Young/BDO)\",\n  \"nomination_committee\": [\"namn1\", \"namn2\"],\n  \"org_number\": \"NNNNNN-NNNN\",\n  \"association_name\": \"Brf fullständiga namn\"\n}",
+      "coaching_history": []
+    },
+    "income_statement_agent": {
+      "priority": 1,
+      "handles": ["Resultaträkning", "Rörelseintäkter", "Rörelsekostnader"],
+      "description": "Extracts income statement and financial metrics",
+      "prompt": "Extrahera resultaträkningsdata från denna svenska BRF årsredovisning.\nSök efter: nettoomsättning, årsavgifter, hyresintäkter, parkering, driftskostnader, reparation och underhåll,\nförvaltningskostnader, personalkostnader, avskrivningar, räntekostnader, ränteintäkter, årets resultat.\nAnvänd aktuellt års siffror (högra kolumnen). Alla belopp i SEK utan mellanslag.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"annual_fees\": 0,\n  \"rental_income\": 0,\n  \"parking_income\": 0,\n  \"other_income\": 0,\n  \"total_revenues\": 0,\n  \"operating_costs\": 0,\n  \"maintenance_costs\": 0,\n  \"management_costs\": 0,\n  \"personnel_costs\": 0,\n  \"depreciation\": 0,\n  \"interest_expense\": 0,\n  \"interest_income\": 0,\n  \"net_income\": 0,\n  \"year\": \"YYYY\"\n}",
+      "coaching_history": []
+    },
+    "balance_sheet_agent": {
+      "priority": 1,
+      "handles": ["Balansräkning", "TILLGÅNGAR", "SKULDER", "EGET KAPITAL"],
+      "description": "Extracts balance sheet items and ratios",
+      "prompt": "Extrahera balansräkningsdata från denna svenska BRF årsredovisning.\nSök efter: anläggningstillgångar, byggnader och mark, omsättningstillgångar, kassa och bank,\neget kapital, medlemsinsatser, upplåtelseavgifter, fond för yttre underhåll, balanserat resultat,\nlångfristiga skulder, kortfristiga skulder, leverantörsskulder.\nAlla belopp i SEK. Summa tillgångar MÅSTE vara lika med summa eget kapital och skulder.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"buildings_and_land\": 0,\n  \"equipment\": 0,\n  \"cash_and_bank\": 0,\n  \"other_current_assets\": 0,\n  \"total_assets\": 0,\n  \"member_deposits\": 0,\n  \"share_capital\": 0,\n  \"maintenance_fund\": 0,\n  \"retained_earnings\": 0,\n  \"year_result\": 0,\n  \"total_equity\": 0,\n  \"long_term_debt\": 0,\n  \"short_term_debt\": 0,\n  \"total_liabilities\": 0,\n  \"balance_date\": \"YYYY-MM-DD\"\n}",
+      "coaching_history": []
+    },
+    "cash_flow_agent": {
+      "priority": 1,
+      "handles": ["Kassaflödesanalys", "Kassaflöde"],
+      "description": "Extracts cash flow statement data",
+      "prompt": "Extrahera kassaflödesanalys från denna svenska BRF årsredovisning.\nSök efter: den löpande verksamheten, investeringsverksamheten, finansieringsverksamheten,\nårets kassaflöde, likvida medel vid årets början/slut, avskrivningar, förändringar i rörelsekapital,\ninvesteringar, upptagna lån, amorteringar.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"operating_activities\": 0,\n  \"investing_activities\": 0,\n  \"financing_activities\": 0,\n  \"total_cash_flow\": 0,\n  \"opening_cash\": 0,\n  \"closing_cash\": 0\n}",
+      "coaching_history": []
+    },
+    "property_agent": {
+      "priority": 2,
+      "handles": ["Föreningens fastighet", "Byggnader och mark", "Fastighetsbeteckning"],
+      "description": "Extracts property-specific information",
+      "prompt": "Extrahera fastighetsinformation från denna svenska BRF årsredovisning.\nSök efter: fastighetsbeteckning, adress, kommun, byggår, tomtareal, bostadsyta, lokalyta,\nantal lägenheter, antal lokaler, antal garage, parkeringsplatser, försäkringsbolag, försäkringstyp.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"property_designation\": \"fastighetsbeteckning\",\n  \"address\": \"gatuadress\",\n  \"municipality\": \"kommun\",\n  \"construction_year\": \"YYYY\",\n  \"land_area_sqm\": 0,\n  \"residential_area_sqm\": 0,\n  \"commercial_area_sqm\": 0,\n  \"apartments_count\": 0,\n  \"commercial_units\": 0,\n  \"parking_spaces\": 0,\n  \"insurance_company\": \"försäkringsbolag\",\n  \"insurance_type\": \"Fullvärde/Fastighetsförsäkring\"\n}",
+      "coaching_history": []
+    },
+    "multi_year_overview_agent": {
+      "priority": 2,
+      "handles": ["Flerårsöversikt", "Femårsöversikt", "Ekonomisk flerårsöversikt"],
+      "description": "Specialized agent for 5-year overview tables",
+      "prompt": "Extrahera flerårsöversikt (5-års tabell) från denna svenska BRF årsredovisning.\nSök efter tabell med: nettoomsättning, rörelseresultat, årets resultat, balansomslutning, soliditet,\nbelåning kr/kvm, årsavgift kr/kvm, driftskostnad kr/kvm, likviditet.\nExtrahera ALLA tillgängliga år (typiskt 5 år).\n\nENDAST JSON - Respond ONLY with arrays där varje index motsvarar samma år:\n{\n  \"years\": [\"2024\", \"2023\", \"2022\", \"2021\", \"2020\"],\n  \"net_revenue\": [0, 0, 0, 0, 0],\n  \"operating_result\": [0, 0, 0, 0, 0],\n  \"net_result\": [0, 0, 0, 0, 0],\n  \"total_assets\": [0, 0, 0, 0, 0],\n  \"solidity_percent\": [0, 0, 0, 0, 0],\n  \"debt_per_sqm\": [0, 0, 0, 0, 0],\n  \"annual_fee_per_sqm\": [0, 0, 0, 0, 0]\n}",
+      "coaching_history": []
+    },
+    "maintenance_events_agent": {
+      "priority": 2,
+      "handles": ["Väsentliga händelser", "Genomförda projekt", "Planerat underhåll", "Underhållsplan"],
+      "description": "Extracts significant events and projects",
+      "prompt": "Extrahera underhåll och väsentliga händelser från denna svenska BRF årsredovisning.\nSök efter: genomförda projekt, planerat underhåll, större reparationer, stambyte, takbyte, fasadrenovering,\nfönsterbyte, hissrenovering, tvättstuga, efter räkenskapsårets utgång.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"completed_projects\": [\n    {\"description\": \"projektbeskrivning\", \"cost\": 0, \"year\": \"YYYY\"}\n  ],\n  \"planned_maintenance\": [\n    {\"description\": \"planerat arbete\", \"estimated_cost\": 0, \"planned_year\": \"YYYY\"}\n  ],\n  \"significant_events\": [\n    {\"event\": \"händelsebeskrivning\", \"date\": \"YYYY-MM\", \"impact\": \"påverkan\"}\n  ],\n  \"maintenance_fund_allocation\": 0\n}",
+      "coaching_history": []
+    },
+    "note_loans_agent": {
+      "priority": 2,
+      "handles": ["Skulder till kreditinstitut", "Långfristiga skulder", "Not.*Lån"],
+      "description": "Extracts detailed loan information from notes",
+      "prompt": "Extrahera låneinformation från noterna i denna svenska BRF årsredovisning.\nSök efter: långivare (Swedbank, Handelsbanken, SEB, Nordea, SBAB, Danske Bank), lånenummer,\nräntesats, räntebindning, förfallodag, amortering, räntetak/swap.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"loans\": [\n    {\n      \"lender\": \"bank\",\n      \"loan_number\": \"lånenummer\",\n      \"balance\": 0,\n      \"interest_rate\": 0.0,\n      \"rate_type\": \"Rörlig/Fast\",\n      \"maturity\": \"YYYY-MM-DD\",\n      \"next_rate_adjustment\": \"YYYY-MM-DD\",\n      \"amortization\": 0\n    }\n  ],\n  \"total_loans\": 0,\n  \"weighted_avg_rate\": 0.0,\n  \"within_one_year\": 0,\n  \"after_five_years\": 0\n}",
+      "coaching_history": []
+    },
+    "note_depreciation_agent": {
+      "priority": 2,
+      "handles": ["Byggnader och mark", "Avskrivningar", "Materiella anläggningstillgångar"],
+      "description": "Extracts asset and depreciation details from notes",
+      "prompt": "Extrahera avskrivningsinformation från noterna.\nSök efter: anskaffningsvärde, ackumulerade avskrivningar, årets avskrivning, bokfört värde,\ntaxeringsvärde byggnader, taxeringsvärde mark, avskrivningsprinciper.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"buildings_acquisition_cost\": 0,\n  \"land_acquisition_cost\": 0,\n  \"accumulated_depreciation\": 0,\n  \"year_depreciation\": 0,\n  \"buildings_book_value\": 0,\n  \"land_book_value\": 0,\n  \"buildings_tax_value\": 0,\n  \"land_tax_value\": 0,\n  \"depreciation_rate_percent\": 0.0\n}",
+      "coaching_history": []
+    },
+    "note_costs_agent": {
+      "priority": 2,
+      "handles": ["Driftskostnader", "Not.*Kostnader", "Specifikation av kostnader"],
+      "description": "Extracts detailed cost breakdown from notes",
+      "prompt": "Extrahera kostnadsspecifikation från noterna.\nSök efter detaljerade kostnader: värme, el, vatten och avlopp, sophämtning, städning, snöröjning,\nförsäkring, fastighetsskatt, förvaltningsarvode, revisionsarvode, styrelsearvode.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"heating\": 0,\n  \"electricity\": 0,\n  \"water_sewage\": 0,\n  \"waste_management\": 0,\n  \"cleaning\": 0,\n  \"snow_removal\": 0,\n  \"property_insurance\": 0,\n  \"property_tax\": 0,\n  \"management_fee\": 0,\n  \"audit_fee\": 0,\n  \"board_compensation\": 0,\n  \"repairs\": 0,\n  \"other_costs\": 0,\n  \"total_operating_costs\": 0\n}",
+      "coaching_history": []
+    },
+    "note_revenue_agent": {
+      "priority": 2,
+      "handles": ["Nettoomsättning", "Rörelseintäkter", "Not.*Intäkter"],
+      "description": "Extracts detailed revenue breakdown from notes",
+      "prompt": "Extrahera intäktsspecifikation från noterna.\nSök efter: årsavgifter bostäder, årsavgifter lokaler, hyresintäkter, parkering, förråd,\növerlåtelseavgifter, pantförskrivningsavgifter, bredband, tvättstuga.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"annual_fees_residential\": 0,\n  \"annual_fees_commercial\": 0,\n  \"commercial_rent\": 0,\n  \"parking_income\": 0,\n  \"storage_income\": 0,\n  \"transfer_fees\": 0,\n  \"mortgage_fees\": 0,\n  \"internet_cable_tv\": 0,\n  \"laundry\": 0,\n  \"other_income\": 0,\n  \"fee_per_sqm\": 0\n}",
+      "coaching_history": []
+    },
+    "suppliers_vendors_agent": {
+      "priority": 2,
+      "handles": ["Leverantörer", "Leverantörsförteckning", "Avtalspartners", "Samarbetspartners", "Tjänsteleverantörer"],
+      "description": "CRITICAL - Extracts supplier and vendor information (10% of docs but extremely valuable)",
+      "prompt": "Extrahera leverantörsinformation från denna svenska BRF årsredovisning.\nVIKTIGT: Endast 10% av rapporter har denna information men när den finns är den mycket värdefull.\nSök efter listor eller omnämnanden av: leverantörer, tjänsteleverantörer, avtalspartners, entreprenörer.\nInkludera ALLA nämnda företagsnamn för: banker, försäkringsbolag, energibolag, värmeleverantör,\nelleverantör, sophämtning, städbolag, fastighetsskötsel, hisservice, VVS, elektriker, snöröjning,\nträdgårdsskötsel, ekonomisk förvaltning, teknisk förvaltning, juridiska tjänster.\n\nENDAST JSON - Respond ONLY with found suppliers (tom array om inga hittas):\n{\n  \"banking\": [\n    {\"name\": \"banknamn\", \"service\": \"typ av tjänst\", \"contact\": \"kontaktinfo om tillgänglig\"}\n  ],\n  \"insurance\": [\n    {\"name\": \"försäkringsbolag\", \"type\": \"försäkringstyp\", \"policy_number\": \"om tillgänglig\"}\n  ],\n  \"utilities\": [\n    {\"name\": \"leverantör\", \"service\": \"el/värme/vatten/avfall\", \"contract_info\": \"avtalsinformation\"}\n  ],\n  \"property_services\": [\n    {\"name\": \"företag\", \"service\": \"städ/snö/trädgård/fastighetsskötsel\", \"frequency\": \"daglig/vecka/månad\"}\n  ],\n  \"technical_services\": [\n    {\"name\": \"företag\", \"service\": \"hiss/VVS/el/ventilation\", \"contract_type\": \"service/akut\"}\n  ],\n  \"management\": [\n    {\"name\": \"företag\", \"service\": \"ekonomisk/teknisk förvaltning\", \"contact\": \"kontaktperson\"}\n  ],\n  \"other_suppliers\": [\n    {\"name\": \"företag\", \"service\": \"tjänstebeskrivning\", \"notes\": \"övrig info\"}\n  ],\n  \"supplier_list_location\": \"sida X om leverantörslista finns\"\n}",
+      "coaching_history": []
+    },
+    "audit_report_agent": {
+      "priority": 3,
+      "handles": ["Revisionsberättelse", "Revisorns rapport", "Uttalanden"],
+      "description": "Extracts audit report and opinions",
+      "prompt": "Extrahera revisionsberättelse från denna svenska BRF årsredovisning.\nSök efter: uttalanden, tillstyrker/avstyrker, ansvarsfrihet, rättvisande bild, anmärkning,\nrevisorns namn, auktoriserad/godkänd revisor, ort och datum.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"opinion\": \"Utan anmärkning/Med anmärkning\",\n  \"recommends_approval\": true,\n  \"recommends_discharge\": true,\n  \"auditor_name\": \"revisorns namn\",\n  \"audit_firm\": \"revisionsbolag\",\n  \"auditor_title\": \"Auktoriserad/Godkänd revisor\",\n  \"signature_date\": \"YYYY-MM-DD\",\n  \"signature_location\": \"ort\",\n  \"remarks\": [\"eventuella anmärkningar\"]\n}",
+      "coaching_history": []
+    },
+    "ratio_kpi_agent": {
+      "priority": 3,
+      "handles": ["Nyckeltal", "Ekonomisk ställning", "Ekonomiska nyckeltal"],
+      "description": "Calculates and extracts financial ratios",
+      "prompt": "Extrahera eller beräkna nyckeltal från denna svenska BRF årsredovisning.\nSök efter: soliditet %, likviditet, belåningsgrad, skuldkvot, driftskostnad kr/kvm,\nräntekänslighet, amorteringstakt.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"solidity_percent\": 0.0,\n  \"current_ratio\": 0.0,\n  \"debt_to_equity\": 0.0,\n  \"interest_coverage\": 0.0,\n  \"debt_per_sqm\": 0,\n  \"annual_fee_per_sqm\": 0,\n  \"operating_cost_per_sqm\": 0,\n  \"avg_fee_increase_percent\": 0.0,\n  \"financial_assessment\": \"God/Tillfredsställande/Svag\"\n}",
+      "coaching_history": []
+    },
+    "member_info_agent": {
+      "priority": 3,
+      "handles": ["Medlemsinformation", "Antal medlemmar", "Överlåtelser", "Andrahandsuthyrning"],
+      "description": "Extracts member statistics",
+      "prompt": "Extrahera medlemsinformation från denna svenska BRF årsredovisning.\nSök efter: antal medlemmar, antal lägenheter, överlåtelser, upplåtelser, andrahandsuthyrning,\növerlåtelseavgift, pantsättningsavgift.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"total_members\": 0,\n  \"apartments_count\": 0,\n  \"transfers_during_year\": 0,\n  \"sublets_approved\": 0,\n  \"transfer_fee\": 0,\n  \"mortgage_registration_fee\": 0,\n  \"members_at_year_end\": 0\n}",
+      "coaching_history": []
+    },
+    "pledged_assets_agent": {
+      "priority": 3,
+      "handles": ["Ställda säkerheter", "Eventualförpliktelser", "Ansvarsförbindelser"],
+      "description": "Extracts pledged assets and contingent liabilities",
+      "prompt": "Extrahera ställda säkerheter från noterna.\nSök efter: fastighetsinteckningar, totalt uttagna pantbrev, varav pantsatta, disponibla pantbrev,\neventualförpliktelser, borgensåtaganden.\n\nENDAST JSON - Respond ONLY with this structure:\n{\n  \"total_mortgages\": 0,\n  \"pledged_to_banks\": 0,\n  \"available_mortgages\": 0,\n  \"contingent_liabilities\": \"beskrivning eller 'Inga'\",\n  \"guarantees\": \"beskrivning eller 'Inga'\"\n}",
+      "coaching_history": []
+    }
+  }
+}
