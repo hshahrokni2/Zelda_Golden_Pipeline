@@ -1,0 +1,264 @@
+{
+  "agent_count": 24,
+  "agents": {
+    "governance_agent": {
+      "prompt_key": "governance",
+      "handles": [
+        "Förvaltningsberättelse",
+        "Styrelsen",
+        "Valberedning"
+      ],
+      "priority": 1,
+      "description": "Board, management, organizational structure"
+    },
+    "income_statement_agent": {
+      "prompt_key": "income_statement",
+      "handles": [
+        "Resultaträkning",
+        "Rörelseintäkter",
+        "Rörelsekostnader"
+      ],
+      "priority": 1,
+      "description": "Revenue, expenses, profit/loss"
+    },
+    "balance_sheet_agent": {
+      "prompt_key": "balance_sheet",
+      "handles": [
+        "Balansräkning",
+        "TILLGÅNGAR",
+        "SKULDER"
+      ],
+      "priority": 1,
+      "description": "Assets, liabilities, equity"
+    },
+    "cash_flow_agent": {
+      "prompt_key": "cash_flow",
+      "handles": [
+        "Kassaflödesanalys",
+        "Kassaflöde"
+      ],
+      "priority": 1,
+      "description": "Operating, investing, financing cash flows"
+    },
+    "property_agent": {
+      "prompt_key": "property",
+      "handles": [
+        "Föreningens fastighet",
+        "Byggnader och mark"
+      ],
+      "priority": 2,
+      "description": "Property details, building information"
+    },
+    "maintenance_agent": {
+      "prompt_key": "maintenance",
+      "handles": [
+        "Väsentliga händelser",
+        "Genomförda projekt",
+        "Underhåll"
+      ],
+      "priority": 2,
+      "description": "Maintenance, projects, significant events"
+    },
+    "multi_year_overview_agent": {
+      "prompt_key": "multi_year_overview",
+      "handles": [
+        "Flerårsöversikt",
+        "Femårsöversikt"
+      ],
+      "priority": 2,
+      "description": "5-year financial overview"
+    },
+    "audit_agent": {
+      "prompt_key": "audit_report",
+      "handles": [
+        "Revisionsberättelse",
+        "Uttalanden"
+      ],
+      "priority": 3,
+      "description": "Audit report, auditor opinions"
+    },
+    "ratio_agent": {
+      "prompt_key": "financial_ratios",
+      "handles": [
+        "Nyckeltal",
+        "Ekonomisk ställning"
+      ],
+      "priority": 2,
+      "description": "Financial ratios, KPIs"
+    },
+    "signature_agent": {
+      "prompt_key": "signatures",
+      "handles": [
+        "Underskrifter",
+        "Styrelsens underskrifter"
+      ],
+      "priority": 4,
+      "description": "Board signatures, attestations"
+    },
+    "note_financial_loans_agent": {
+      "prompt_key": "note_financial_loans",
+      "handles": [
+        "Skulder till kreditinstitut",
+        "Långfristiga skulder"
+      ],
+      "priority": 2,
+      "description": "Loan details from notes"
+    },
+    "note_asset_depreciation_agent": {
+      "prompt_key": "note_asset_depreciation",
+      "handles": [
+        "Byggnader och mark",
+        "Avskrivningar"
+      ],
+      "priority": 2,
+      "description": "Asset depreciation details"
+    },
+    "note_pledged_assets_agent": {
+      "prompt_key": "note_pledged_assets",
+      "handles": [
+        "Ställda säkerheter",
+        "Ansvarsförbindelser"
+      ],
+      "priority": 2,
+      "description": "Pledged assets, contingencies"
+    },
+    "note_revenue_breakdown_agent": {
+      "prompt_key": "note_revenue_breakdown",
+      "handles": [
+        "Nettoomsättning",
+        "Rörelseintäkter"
+      ],
+      "priority": 2,
+      "description": "Detailed revenue breakdown"
+    },
+    "note_cost_breakdown_agent": {
+      "prompt_key": "note_cost_breakdown",
+      "handles": [
+        "Driftskostnader",
+        "Fastighetsskötsel",
+        "Reparationer"
+      ],
+      "priority": 2,
+      "description": "Detailed cost breakdown"
+    },
+    "board_table_extractor": {
+      "prompt_key": "extract_board_table",
+      "handles": [
+        "Styrelsen har utgjorts av",
+        "Styrelsens sammansättning"
+      ],
+      "priority": 2,
+      "description": "Extract board member tables"
+    },
+    "multi_year_table_extractor": {
+      "prompt_key": "extract_multi_year_table",
+      "handles": [
+        "Flerårsöversikt tabell"
+      ],
+      "priority": 2,
+      "description": "Extract 5-year overview tables"
+    },
+    "loan_table_extractor": {
+      "prompt_key": "extract_loan_table",
+      "handles": [
+        "Lån tabell",
+        "Kreditförteckning"
+      ],
+      "priority": 3,
+      "description": "Extract loan detail tables"
+    },
+    "cost_table_extractor": {
+      "prompt_key": "extract_cost_table",
+      "handles": [
+        "Kostnadsspecifikation",
+        "Driftskostnader tabell"
+      ],
+      "priority": 3,
+      "description": "Extract cost breakdown tables"
+    },
+    "toc_agent": {
+      "prompt_key": "table_of_contents",
+      "handles": [
+        "Innehållsförteckning",
+        "Innehåll"
+      ],
+      "priority": 4,
+      "description": "Extract table of contents"
+    },
+    "member_info_agent": {
+      "prompt_key": "member_information",
+      "handles": [
+        "Medlemsinformation",
+        "Antal medlemmar"
+      ],
+      "priority": 3,
+      "description": "Member statistics, transfers"
+    },
+    "insurance_agent": {
+      "prompt_key": "insurance_details",
+      "handles": [
+        "Försäkring",
+        "Försäkringsskydd"
+      ],
+      "priority": 3,
+      "description": "Insurance coverage details"
+    },
+    "legal_agent": {
+      "prompt_key": "legal_compliance",
+      "handles": [
+        "Juridisk information",
+        "Stadgar"
+      ],
+      "priority": 4,
+      "description": "Legal and compliance information"
+    },
+    "summary_agent": {
+      "prompt_key": "executive_summary",
+      "handles": [
+        "Sammanfattning",
+        "Översikt"
+      ],
+      "priority": 4,
+      "description": "Generate executive summary"
+    }
+  },
+  "execution_batches": [
+    [
+      "governance_agent",
+      "income_statement_agent",
+      "balance_sheet_agent",
+      "cash_flow_agent"
+    ],
+    [
+      "property_agent",
+      "maintenance_agent",
+      "multi_year_overview_agent",
+      "ratio_agent"
+    ],
+    [
+      "note_financial_loans_agent",
+      "note_asset_depreciation_agent",
+      "note_pledged_assets_agent",
+      "note_revenue_breakdown_agent"
+    ],
+    [
+      "note_cost_breakdown_agent",
+      "board_table_extractor",
+      "multi_year_table_extractor",
+      "audit_agent"
+    ],
+    [
+      "loan_table_extractor",
+      "cost_table_extractor",
+      "member_info_agent",
+      "insurance_agent"
+    ],
+    [
+      "signature_agent",
+      "toc_agent",
+      "legal_agent",
+      "summary_agent"
+    ]
+  ],
+  "max_parallel": 4
+}

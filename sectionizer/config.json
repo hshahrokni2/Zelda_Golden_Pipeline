@@ -1,0 +1,221 @@
+{
+  "section_patterns": {
+    "table_of_contents": [
+      "innehållsförteckning",
+      "innehåll"
+    ],
+    "management_report": [
+      "förvaltningsberättelse",
+      "verksamhetsberättelse"
+    ],
+    "income_statement": [
+      "resultaträkning"
+    ],
+    "balance_sheet": [
+      "balansräkning"
+    ],
+    "cash_flow": [
+      "kassaflödesanalys",
+      "kassaflöde"
+    ],
+    "notes": [
+      "noter",
+      "tilläggsupplysningar",
+      "notupplysningar"
+    ],
+    "signatures": [
+      "underskrifter",
+      "styrelsens underskrifter"
+    ],
+    "audit_report": [
+      "revisionsberättelse",
+      "revisorns rapport"
+    ],
+    "general_operations": [
+      "allmänt om verksamheten",
+      "verksamhet"
+    ],
+    "board_info": [
+      "styrelsen",
+      "styrelseledamöter",
+      "styrelsens sammansättning"
+    ],
+    "property_info": [
+      "föreningens fastighet",
+      "fastigheten",
+      "fastighetsinformation"
+    ],
+    "member_info": [
+      "medlemsinformation",
+      "medlemmar",
+      "antal medlemmar"
+    ],
+    "significant_events": [
+      "väsentliga händelser",
+      "händelser under året"
+    ],
+    "multi_year": [
+      "flerårsöversikt",
+      "femårsöversikt",
+      "ekonomisk flerårsöversikt"
+    ],
+    "economic_position": [
+      "ekonomisk ställning",
+      "nyckeltal"
+    ],
+    "accounting_principles": [
+      "redovisningsprinciper",
+      "redovisnings- och värderingsprinciper"
+    ],
+    "revenue_note": [
+      "nettoomsättning",
+      "rörelseintäkter",
+      "intäkter"
+    ],
+    "cost_note": [
+      "driftskostnader",
+      "kostnader",
+      "rörelsekostnader"
+    ],
+    "staff_note": [
+      "personalkostnader",
+      "anställda",
+      "arvoden"
+    ],
+    "buildings_note": [
+      "byggnader och mark",
+      "materiella anläggningstillgångar"
+    ],
+    "depreciation_note": [
+      "avskrivningar",
+      "avskrivningsprinciper"
+    ],
+    "loans_note": [
+      "skulder till kreditinstitut",
+      "långfristiga skulder",
+      "lån"
+    ],
+    "pledged_assets_note": [
+      "ställda säkerheter",
+      "panter",
+      "ansvarsförbindelser"
+    ],
+    "suppliers": [
+      "leverantörer",
+      "leverantörsförteckning",
+      "avtalspartners",
+      "samarbetspartners",
+      "tjänsteleverantörer",
+      "entreprenörer",
+      "serviceavtal",
+      "avtalsparter"
+    ],
+    "board_table": [
+      "styrelsen har utgjorts av",
+      "styrelsens sammansättning"
+    ],
+    "multi_year_table": [
+      "flerårsöversikt",
+      "femårsöversikt"
+    ],
+    "loan_table": [
+      "låneförteckning",
+      "kreditförteckning",
+      "lån"
+    ],
+    "cost_table": [
+      "kostnadsspecifikation",
+      "driftskostnader"
+    ],
+    "supplier_table": [
+      "leverantörslista",
+      "avtalslista"
+    ]
+  },
+  "section_to_agents": {
+    "management_report": [
+      "governance_agent",
+      "property_agent",
+      "maintenance_events_agent"
+    ],
+    "income_statement": [
+      "income_statement_agent"
+    ],
+    "balance_sheet": [
+      "balance_sheet_agent"
+    ],
+    "cash_flow": [
+      "cash_flow_agent"
+    ],
+    "notes": [
+      "note_loans_agent",
+      "note_depreciation_agent",
+      "note_costs_agent",
+      "note_revenue_agent",
+      "pledged_assets_agent"
+    ],
+    "audit_report": [
+      "audit_report_agent"
+    ],
+    "board_info": [
+      "governance_agent"
+    ],
+    "property_info": [
+      "property_agent"
+    ],
+    "member_info": [
+      "member_info_agent"
+    ],
+    "significant_events": [
+      "maintenance_events_agent"
+    ],
+    "multi_year": [
+      "multi_year_overview_agent"
+    ],
+    "economic_position": [
+      "ratio_kpi_agent"
+    ],
+    "loans_note": [
+      "note_loans_agent"
+    ],
+    "depreciation_note": [
+      "note_depreciation_agent"
+    ],
+    "cost_note": [
+      "note_costs_agent"
+    ],
+    "revenue_note": [
+      "note_revenue_agent"
+    ],
+    "pledged_assets_note": [
+      "pledged_assets_agent"
+    ],
+    "suppliers": [
+      "suppliers_vendors_agent"
+    ],
+    "supplier_table": [
+      "suppliers_vendors_agent"
+    ],
+    "board_table": [
+      "governance_agent"
+    ],
+    "multi_year_table": [
+      "multi_year_overview_agent"
+    ],
+    "loan_table": [
+      "note_loans_agent"
+    ],
+    "cost_table": [
+      "note_costs_agent"
+    ]
+  },
+  "discovery_prompts": {
+    "general": "Extract ALL section headers from these Swedish BRF annual report pages.\nLook for main sections AND subsections:\n- Förvaltningsberättelse, Resultaträkning, Balansräkning, Kassaflödesanalys\n- Noter (and all individual notes), Revisionsberättelse\n- Styrelsen, Fastigheten, Medlemsinformation, Väsentliga händelser\n- Flerårsöversikt, Ekonomisk ställning, Nyckeltal\n- IMPORTANT: Leverantörer, Leverantörsförteckning, Avtalspartners\n\nReturn: [{\"text\": \"header text\", \"page\": N, \"level\": 1/2/3, \"type\": \"section/table/list\"}]",
+    "suppliers": "Find ALL mentions of suppliers, vendors, and service providers in this document.\nLook for:\n- Leverantörer / Leverantörsförteckning\n- Lists of company names providing services\n- Avtalspartners / Samarbetspartners\n- Banks, insurance companies, utilities, cleaning, maintenance companies\n- Any table or list with company names and services\n\nReturn: [{\"text\": \"section or company name\", \"page\": N, \"type\": \"supplier/vendor\"}]"
+  },
+  "special_instructions": {
+    "suppliers": "Run supplier detection as additional pass if not found in main sections",
+    "tables": "Identify tables by structure, not just headers",
+    "notes": "Each note is a separate entity for targeted extraction"
+  }
+}

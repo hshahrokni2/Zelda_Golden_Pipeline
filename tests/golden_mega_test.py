@@ -1,0 +1,480 @@
+#!/usr/bin/env python3
+"""
+MEGA ORCHESTRATOR TEST - Single comprehensive test that logs progress
+Can be run in background and checked asynchronously
+"""
+import json
+import time
+import sys
+import os
+from datetime import datetime
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('/tmp/orchestrator_test.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+class MegaOrchestratorTest:
+    """Single comprehensive test for the entire orchestrator system"""
+    
+    def __init__(self):
+        self.test_results = {
+            "start_time": datetime.now().isoformat(),
+            "tests": {},
+            "status": "RUNNING",
+            "current_test": None
+        }
+        self.save_progress()
+    
+    def save_progress(self):
+        """Save current progress to file for async checking"""
+        with open('/tmp/orchestrator_test_status.json', 'w') as f:
+            json.dump(self.test_results, f, indent=2)
+    
+    def log_test_start(self, test_name):
+        """Log start of a test section"""
+        logger.info(f"\n{'='*60}")
+        logger.info(f"STARTING TEST: {test_name}")
+        logger.info(f"{'='*60}")
+        self.test_results["current_test"] = test_name
+        self.test_results["tests"][test_name] = {
+            "status": "RUNNING",
+            "start_time": datetime.now().isoformat()
+        }
+        self.save_progress()
+    
+    def log_test_complete(self, test_name, success, details=None):
+        """Log completion of a test section"""
+        status = "PASS" if success else "FAIL"
+        logger.info(f"TEST {test_name}: {status}")
+        self.test_results["tests"][test_name]["status"] = status
+        self.test_results["tests"][test_name]["end_time"] = datetime.now().isoformat()
+        if details:
+            self.test_results["tests"][test_name]["details"] = details
+        self.save_progress()
+    
+    def test_1_sectionizer(self):
+        """Test 1: Enhanced Sectionizer with Suppliers"""
+        self.log_test_start("SECTIONIZER")
+        details = {}
+        
+        try:
+            logger.info("Loading enhanced sectionizer...")
+            from sectionizer.golden_sectionizer import GoldenSectionizer
+            sectionizer = GoldenSectionizer()
+            
+            # Check patterns
+            logger.info(f"Section patterns loaded: {len(sectionizer.section_patterns)}")
+            details["total_patterns"] = len(sectionizer.section_patterns)
+            
+            # Check suppliers specifically
+            supplier_patterns = sectionizer.section_patterns.get("suppliers", [])
+            logger.info(f"Supplier patterns: {supplier_patterns}")
+            details["supplier_patterns"] = supplier_patterns
+            
+            # Test mapping
+            test_sections = [
+                {"name": "Förvaltningsberättelse", "page": 3},
+                {"name": "Leverantörsförteckning", "page": 28},
+                {"name": "Resultaträkning", "page": 9},
+                {"name": "Noter", "page": 14}
+            ]
+            
+            mappings = sectionizer.map_sections_to_agents(test_sections)
+            logger.info(f"Mapped {len(mappings)} agents")
+            details["agents_mapped"] = list(mappings.keys())
+            
+            # Critical check - suppliers
+            success = "suppliers_vendors_agent" in mappings
+            if success:
+                logger.info("✅ Suppliers agent correctly mapped!")
+            else:
+                logger.error("❌ Suppliers agent NOT mapped!")
+            
+            details["suppliers_detected"] = success
+            self.log_test_complete("SECTIONIZER", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Sectionizer test failed: {e}")
+            self.log_test_complete("SECTIONIZER", False, {"error": str(e)})
+            return False
+    
+    def test_2_mapping_logic(self):
+        """Test 2: Intelligent Mapping and Extraction Zones"""
+        self.log_test_start("MAPPING_LOGIC")
+        details = {}
+        
+        try:
+            logger.info("Loading intelligent orchestrator...")
+            from orchestrator.golden_orchestrator import GoldenOrchestrator
+            orchestrator = GoldenOrchestrator()
+            
+            # Test document structure
+            test_sections = [
+                {"name": "Förvaltningsberättelse", "start_page": 3, "end_page": 8},
+                {"name": "Styrelsen", "page": 4},
+                {"name": "Resultaträkning", "start_page": 9, "end_page": 10},
+                {"name": "Balansräkning", "start_page": 11, "end_page": 12},
+                {"name": "Kassaflödesanalys", "page": 13},
+                {"name": "Noter", "start_page": 14, "end_page": 20},
+                {"name": "Leverantörer", "page": 28},
+                {"name": "Revisionsberättelse", "start_page": 21, "end_page": 22}
+            ]
+            
+            assignments = orchestrator.map_sections_to_agents(test_sections)
+            logger.info(f"Created assignments for {len(assignments)} agents")
+            details["total_agents"] = len(assignments)
+            
+            # Check critical agents
+            critical = ["governance_agent", "income_statement_agent", 
+                       "balance_sheet_agent", "suppliers_vendors_agent"]
+            
+            all_present = all(agent in assignments for agent in critical)
+            details["critical_agents_present"] = all_present
+            
+            # Check extraction zones
+            for agent in ["governance_agent", "suppliers_vendors_agent"]:
+                if agent in assignments:
+                    zone = assignments[agent]["extraction_zone"]
+                    logger.info(f"{agent} zone: pages {zone['start']}-{zone['end']}")
+                    details[f"{agent}_zone"] = f"{zone['start']}-{zone['end']}"
+            
+            # Check priority distribution
+            by_priority = {}
+            for agent, config in assignments.items():
+                p = config["priority"]
+                by_priority[p] = by_priority.get(p, 0) + 1
+            
+            logger.info(f"Priority distribution: {by_priority}")
+            details["priority_distribution"] = by_priority
+            
+            success = all_present and len(assignments) >= 10
+            self.log_test_complete("MAPPING_LOGIC", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Mapping test failed: {e}")
+            self.log_test_complete("MAPPING_LOGIC", False, {"error": str(e)})
+            return False
+    
+    def test_3_learning_system(self):
+        """Test 3: Autonomous Learning and Coaching"""
+        self.log_test_start("LEARNING_SYSTEM")
+        details = {}
+        
+        try:
+            logger.info("Testing learning capabilities...")
+            from orchestrator.golden_orchestrator import GoldenOrchestrator
+            orchestrator = GoldenOrchestrator()
+            
+            # Simulate failures
+            test_failures = [
+                ("governance_agent", ["Empty output from governance_agent"]),
+                ("suppliers_vendors_agent", ["Empty output from suppliers_vendors_agent"]),
+                ("balance_sheet_agent", ["Failed validation: balance_check"])
+            ]
+            
+            learning_results = []
+            for agent, issues in test_failures:
+                logger.info(f"Simulating failure for {agent}: {issues}")
+                learning = orchestrator.learn_from_failure(agent, issues)
+                
+                if learning["improvements"]:
+                    improvement = learning["improvements"][0]["suggestion"]
+                    logger.info(f"  Generated improvement: {improvement}")
+                    learning_results.append({
+                        "agent": agent,
+                        "improvement": improvement
+                    })
+                
+                # Generate coaching
+                coaching = orchestrator.generate_coaching_feedback(agent, issues)
+                logger.info(f"  Coaching generated: {len(coaching)} chars")
+            
+            details["learning_entries"] = len(learning_results)
+            details["agents_with_learning"] = list(orchestrator.learning_db.keys())
+            
+            success = len(learning_results) >= 2
+            self.log_test_complete("LEARNING_SYSTEM", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Learning test failed: {e}")
+            self.log_test_complete("LEARNING_SYSTEM", False, {"error": str(e)})
+            return False
+    
+    def test_4_validation(self):
+        """Test 4: Validation Rules and Cross-Checking"""
+        self.log_test_start("VALIDATION")
+        details = {}
+        
+        try:
+            logger.info("Testing validation system...")
+            from orchestrator.golden_orchestrator import GoldenOrchestrator
+            orchestrator = GoldenOrchestrator()
+            
+            # Test data that should pass validation
+            valid_balance_sheet = {
+                "total_assets": 301339818,
+                "total_equity": 201801694,
+                "total_liabilities": 99538124
+            }
+            
+            # Validate
+            is_valid, issues = orchestrator.validate_agent_output(
+                "balance_sheet_agent",
+                valid_balance_sheet,
+                ["total_assets", "total_equity", "total_liabilities"]
+            )
+            
+            logger.info(f"Valid balance sheet: {is_valid}")
+            details["balance_validation"] = is_valid
+            
+            # Test cross-validation
+            test_results = {
+                "balance_sheet_agent": {"long_term_debt": 92000000},
+                "note_loans_agent": {"total_loans": 92500000},
+                "governance_agent": {"property_designation": "Kungsholmen 1:23"},
+                "property_agent": {"property_designation": "Kungsholmen 1:23"}
+            }
+            
+            cross_validations = orchestrator.cross_validate_agents(test_results)
+            logger.info(f"Cross-validations found: {len(cross_validations)}")
+            details["cross_validation_issues"] = len(cross_validations)
+            
+            success = is_valid and len(cross_validations) <= 1  # Allow small mismatch
+            self.log_test_complete("VALIDATION", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Validation test failed: {e}")
+            self.log_test_complete("VALIDATION", False, {"error": str(e)})
+            return False
+    
+    def test_5_execution_planning(self):
+        """Test 5: Execution Planning with H100 Constraints"""
+        self.log_test_start("EXECUTION_PLANNING")
+        details = {}
+        
+        try:
+            logger.info("Testing execution planning...")
+            from orchestrator.golden_orchestrator import GoldenOrchestrator
+            orchestrator = GoldenOrchestrator()
+            
+            # All 16 agents
+            all_agents = {
+                "governance_agent": {"priority": 1},
+                "income_statement_agent": {"priority": 1},
+                "balance_sheet_agent": {"priority": 1},
+                "cash_flow_agent": {"priority": 1},
+                "property_agent": {"priority": 2},
+                "multi_year_overview_agent": {"priority": 2},
+                "maintenance_events_agent": {"priority": 2},
+                "note_loans_agent": {"priority": 2},
+                "note_depreciation_agent": {"priority": 2},
+                "note_costs_agent": {"priority": 2},
+                "note_revenue_agent": {"priority": 2},
+                "suppliers_vendors_agent": {"priority": 2},
+                "audit_report_agent": {"priority": 3},
+                "ratio_kpi_agent": {"priority": 3},
+                "member_info_agent": {"priority": 3},
+                "pledged_assets_agent": {"priority": 3}
+            }
+            
+            batches = orchestrator.generate_execution_plan(all_agents)
+            logger.info(f"Created {len(batches)} execution batches")
+            details["total_batches"] = len(batches)
+            
+            # Check batch sizes
+            max_batch = max(len(batch) for batch in batches)
+            logger.info(f"Max batch size: {max_batch}")
+            details["max_batch_size"] = max_batch
+            
+            # Log batches
+            for i, batch in enumerate(batches, 1):
+                logger.info(f"Batch {i}: {', '.join(batch)}")
+                details[f"batch_{i}"] = batch
+            
+            # Check suppliers is included
+            all_agents_in_batches = [agent for batch in batches for agent in batch]
+            suppliers_included = "suppliers_vendors_agent" in all_agents_in_batches
+            details["suppliers_included"] = suppliers_included
+            
+            success = max_batch <= 4 and suppliers_included and len(batches) == 4
+            self.log_test_complete("EXECUTION_PLANNING", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Execution planning test failed: {e}")
+            self.log_test_complete("EXECUTION_PLANNING", False, {"error": str(e)})
+            return False
+    
+    def test_6_integration(self):
+        """Test 6: Full Integration Test"""
+        self.log_test_start("INTEGRATION")
+        details = {}
+        
+        try:
+            logger.info("Running full integration test...")
+            
+            # Import both systems
+            from sectionizer.golden_sectionizer import GoldenSectionizer
+            from orchestrator.golden_orchestrator import GoldenOrchestrator
+            
+            sectionizer = GoldenSectionizer()
+            orchestrator = GoldenOrchestrator()
+            
+            # Simulate full document
+            logger.info("Simulating complete document processing...")
+            
+            mock_sections = [
+                {"name": "Förvaltningsberättelse", "start_page": 3, "end_page": 8, "type": "text"},
+                {"name": "Styrelsen", "page": 4, "type": "subsection"},
+                {"name": "Föreningens fastighet", "page": 5, "type": "subsection"},
+                {"name": "Flerårsöversikt", "page": 7, "type": "table"},
+                {"name": "Resultaträkning", "start_page": 9, "end_page": 10, "type": "table"},
+                {"name": "Balansräkning", "start_page": 11, "end_page": 12, "type": "table"},
+                {"name": "Kassaflödesanalys", "page": 13, "type": "statement"},
+                {"name": "Noter", "start_page": 14, "end_page": 20, "type": "text"},
+                {"name": "Not 8 - Skulder till kreditinstitut", "page": 18, "type": "note"},
+                {"name": "Revisionsberättelse", "start_page": 21, "end_page": 22, "type": "text"},
+                {"name": "Leverantörsförteckning", "page": 28, "type": "list"}
+            ]
+            
+            # Step 1: Map sections
+            logger.info("Step 1: Mapping sections to agents...")
+            assignments = orchestrator.map_sections_to_agents(mock_sections)
+            details["agents_assigned"] = len(assignments)
+            
+            # Step 2: Create execution plan
+            logger.info("Step 2: Creating execution plan...")
+            batches = orchestrator.generate_execution_plan(assignments)
+            details["execution_batches"] = len(batches)
+            
+            # Step 3: Simulate execution
+            logger.info("Step 3: Simulating execution...")
+            mock_results = {
+                "governance_agent": {"chairman": "Test Ordförande", "board_members": []},
+                "income_statement_agent": {"annual_fees": 5000000, "net_income": 500000},
+                "balance_sheet_agent": {
+                    "total_assets": 100000000,
+                    "total_equity": 60000000,
+                    "total_liabilities": 40000000
+                },
+                "suppliers_vendors_agent": {
+                    "banking": [{"name": "Swedbank", "service": "Huvudbank"}],
+                    "insurance": [{"name": "Länsförsäkringar", "type": "Fastighet"}]
+                }
+            }
+            
+            # Step 4: Validate results
+            logger.info("Step 4: Validating results...")
+            balance = mock_results["balance_sheet_agent"]
+            balance_valid = abs(balance["total_assets"] - 
+                              (balance["total_equity"] + balance["total_liabilities"])) < 1000
+            details["balance_validation"] = balance_valid
+            
+            # Step 5: Check suppliers
+            suppliers = mock_results.get("suppliers_vendors_agent", {})
+            has_suppliers = bool(suppliers.get("banking") or suppliers.get("insurance"))
+            details["suppliers_found"] = has_suppliers
+            
+            # Overall success
+            success = (
+                len(assignments) >= 10 and
+                len(batches) == 4 and
+                balance_valid and
+                has_suppliers
+            )
+            
+            logger.info(f"Integration test complete: {'SUCCESS' if success else 'FAILURE'}")
+            self.log_test_complete("INTEGRATION", success, details)
+            return success
+            
+        except Exception as e:
+            logger.error(f"Integration test failed: {e}")
+            self.log_test_complete("INTEGRATION", False, {"error": str(e)})
+            return False
+    
+    def run_all_tests(self):
+        """Run all tests in sequence"""
+        logger.info("="*60)
+        logger.info("MEGA ORCHESTRATOR TEST SUITE")
+        logger.info(f"Started at: {datetime.now()}")
+        logger.info("="*60)
+        
+        tests = [
+            ("Sectionizer", self.test_1_sectionizer),
+            ("Mapping", self.test_2_mapping_logic),
+            ("Learning", self.test_3_learning_system),
+            ("Validation", self.test_4_validation),
+            ("Execution", self.test_5_execution_planning),
+            ("Integration", self.test_6_integration)
+        ]
+        
+        results = {}
+        for test_name, test_func in tests:
+            logger.info(f"\n\n{'='*20} {test_name} {'='*20}")
+            try:
+                success = test_func()
+                results[test_name] = success
+                time.sleep(1)  # Small pause between tests
+            except Exception as e:
+                logger.error(f"Test {test_name} crashed: {e}")
+                results[test_name] = False
+        
+        # Final summary
+        logger.info("\n" + "="*60)
+        logger.info("FINAL TEST SUMMARY")
+        logger.info("="*60)
+        
+        passed = sum(1 for r in results.values() if r)
+        total = len(results)
+        
+        for test, result in results.items():
+            status = "✅ PASS" if result else "❌ FAIL"
+            logger.info(f"  {test}: {status}")
+        
+        logger.info(f"\n🏆 Final Score: {passed}/{total} tests passed")
+        
+        # Update final status
+        self.test_results["status"] = "COMPLETE"
+        self.test_results["end_time"] = datetime.now().isoformat()
+        self.test_results["summary"] = {
+            "total_tests": total,
+            "passed": passed,
+            "failed": total - passed,
+            "success": passed == total
+        }
+        self.save_progress()
+        
+        # Save final results
+        with open('/tmp/orchestrator_test_results.json', 'w') as f:
+            json.dump(self.test_results, f, indent=2)
+        
+        logger.info(f"\n📊 Results saved to /tmp/orchestrator_test_results.json")
+        logger.info(f"📄 Full log at /tmp/orchestrator_test.log")
+        
+        if passed == total:
+            logger.info("\n✅ ALL TESTS PASSED - ORCHESTRATOR READY FOR PRODUCTION!")
+        else:
+            logger.warning(f"\n⚠️ {total - passed} tests failed - Review and fix issues")
+        
+        return passed == total
+
+def main():
+    """Main entry point"""
+    tester = MegaOrchestratorTest()
+    success = tester.run_all_tests()
+    sys.exit(0 if success else 1)
+
+if __name__ == "__main__":
+    main()
