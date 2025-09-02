@@ -6,7 +6,7 @@ Includes all sections needed for the 16 essential agents
 import json
 from typing import Dict, List, Optional
 
-class EnhancedGoldenSectionizer:
+class GoldenSectionizer:
     """
     Enhanced sectionizer that detects all sections including suppliers
     """
@@ -224,7 +224,7 @@ Return: [{"company": "name", "service": "type", "page": N, "in_table": true/fals
 def generate_sectionizer_config():
     """Generate configuration for enhanced sectionizer"""
     
-    sectionizer = EnhancedGoldenSectionizer()
+    sectionizer = GoldenSectionizer()
     
     config = {
         "section_patterns": sectionizer.section_patterns,

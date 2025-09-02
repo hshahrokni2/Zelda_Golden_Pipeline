@@ -8,7 +8,7 @@ import hashlib
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 
-class IntelligentLearningOrchestrator:
+class GoldenOrchestrator:
     """
     Orchestrator that:
     1. Maps sections to agents intelligently
@@ -402,7 +402,7 @@ class IntelligentLearningOrchestrator:
 
 def main():
     """Test the intelligent orchestrator"""
-    orchestrator = IntelligentLearningOrchestrator()
+    orchestrator = GoldenOrchestrator()
     
     print("INTELLIGENT LEARNING ORCHESTRATOR")
     print("="*60)
