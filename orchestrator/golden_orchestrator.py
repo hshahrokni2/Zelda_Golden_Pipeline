@@ -5,6 +5,7 @@ Maps sections to agents and learns from extraction failures
 """
 import json
 import hashlib
+import os
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 
@@ -17,11 +18,21 @@ class GoldenOrchestrator:
     4. Provides feedback for future extractions
     """
     
-    def __init__(self):
+    def __init__(self, db_config: Optional[Dict] = None):
         self.learning_db = {}  # In production, use PostgreSQL
         self.validation_rules = self._init_validation_rules()
         self.agent_dependencies = self._init_dependencies()
         self.max_parallel = 4  # H100 constraint
+        
+        # Initialize Card G4 Reinforced Coach if enabled
+        self.coach = None
+        if os.getenv('COACHING_ENABLED') == 'true' and db_config:
+            try:
+                from coaching.card_g4_reinforced_coach import Card_G4_ReinforcedCoach
+                self.coach = Card_G4_ReinforcedCoach(db_config)
+                print("✅ Card G4 Reinforced Coach initialized")
+            except Exception as e:
+                print(f"⚠️ Coaching disabled: {e}")
         
     def _init_validation_rules(self) -> Dict:
         """Define validation rules for agent outputs"""
@@ -86,8 +97,8 @@ class GoldenOrchestrator:
         """
         Intelligent section-to-agent mapping with priority and dependencies
         """
-        from enhanced_sectionizer_with_suppliers import EnhancedGoldenSectionizer
-        sectionizer = EnhancedGoldenSectionizer()
+        from sectionizer.golden_sectionizer import GoldenSectionizer
+        sectionizer = GoldenSectionizer()
         
         # Get basic mapping
         agent_assignments = sectionizer.map_sections_to_agents(sections)
@@ -342,6 +353,33 @@ class GoldenOrchestrator:
                 execution_batches.append(batch)
         
         return execution_batches
+    
+    def process_with_coaching(self, doc_id: str, agent_name: str, 
+                              extraction: Dict, ground_truth: Optional[Dict] = None) -> Dict:
+        """
+        Process extraction with Card G4 coaching if enabled
+        """
+        if not self.coach:
+            return extraction
+        
+        try:
+            # Apply coaching to improve extraction
+            coached_extraction = self.coach.coach_extraction(
+                doc_id=doc_id,
+                agent_id=agent_name,
+                current_extraction=extraction,
+                ground_truth=ground_truth
+            )
+            
+            # Log improvement
+            if coached_extraction != extraction:
+                print(f"  ✨ Coaching improved {agent_name} extraction")
+            
+            return coached_extraction
+            
+        except Exception as e:
+            print(f"  ⚠️ Coaching failed for {agent_name}: {e}")
+            return extraction
     
     def generate_coaching_feedback(self, agent_name: str, issues: List[str]) -> str:
         """

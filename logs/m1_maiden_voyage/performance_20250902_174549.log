@@ -1,0 +1,10 @@
+[2025-09-02 17:45:49.304] INFO     [M1_VOYAGE:wrapper:132] [PERF] System Initialization: 105.52ms | Memory: 17.9MB (+0.0MB) | CPU: 11.3%
+[2025-09-02 17:45:49.612] INFO     [M1_VOYAGE:wrapper:132] [PERF] Database Connection: 203.37ms | Memory: 29.1MB (+11.2MB) | CPU: 12.4%
+[2025-09-02 17:45:49.828] INFO     [M1_VOYAGE:wrapper:132] [PERF] Orchestrator Loading: 110.60ms | Memory: 30.8MB (+1.8MB) | CPU: 23.7%
+[2025-09-02 17:45:50.035] INFO     [M1_VOYAGE:wrapper:132] [PERF] PDF Loading: 106.44ms | Memory: 30.8MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.246] INFO     [M1_VOYAGE:wrapper:132] [PERF] Sectionizer: 107.28ms | Memory: 30.9MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.454] INFO     [M1_VOYAGE:wrapper:132] [PERF] Agent Mapping: 102.71ms | Memory: 30.9MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.663] INFO     [M1_VOYAGE:wrapper:132] [PERF] Extraction with Coaching: 103.02ms | Memory: 30.9MB (+0.0MB) | CPU: 27.2%
+[2025-09-02 17:45:50.868] INFO     [M1_VOYAGE:wrapper:132] [PERF] Results Storage: 104.42ms | Memory: 30.9MB (+0.0MB) | CPU: 24.6%
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:629] 
+⚡ PERFORMANCE SUMMARY:

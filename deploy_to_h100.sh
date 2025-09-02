@@ -23,7 +23,7 @@ scp -P $H100_PORT -i $H100_KEY -r /tmp/Golden_Orchestrator_Pipeline/* $H100_USER
 echo "🗄️ Updating PostgreSQL with new agents..."
 ssh -p $H100_PORT -i $H100_KEY $H100_USER@$H100_HOST << 'EOF'
 cd /tmp/Golden_Orchestrator_Pipeline
-PGPASSWORD=h100pass psql -U postgres -h localhost -d zelda_arsredovisning < agents/update_postgres_agents.sql
+PGPASSWORD=h100pass psql -U postgres -h localhost -d zelda_arsredovisning < agents/update_postgres_correct.sql
 echo "Agent count in database:"
 PGPASSWORD=h100pass psql -U postgres -h localhost -d zelda_arsredovisning -t -c "SELECT COUNT(*) FROM agent_registry;"
 EOF

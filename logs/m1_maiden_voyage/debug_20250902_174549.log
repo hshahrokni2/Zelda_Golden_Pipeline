@@ -1,0 +1,114 @@
+[2025-09-02 17:45:49.094] INFO     [M1_VOYAGE:setup_comprehensive_logging:98] ================================================================================
+[2025-09-02 17:45:49.094] INFO     [M1_VOYAGE:setup_comprehensive_logging:99] 🚢 M1 MAIDEN VOYAGE - LOGGING SYSTEM INITIALIZED
+[2025-09-02 17:45:49.094] INFO     [M1_VOYAGE:setup_comprehensive_logging:100] Timestamp: 20250902_174549
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:setup_comprehensive_logging:101] Log directory: /tmp/Golden_Orchestrator_Pipeline/logs/m1_maiden_voyage
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:setup_comprehensive_logging:102] ================================================================================
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:run_voyage:569] 
+================================================================================
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:run_voyage:570] 🚀 STARTING MAIDEN VOYAGE SEQUENCE
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:run_voyage:571] ================================================================================
+
+[2025-09-02 17:45:49.095] INFO     [M1_VOYAGE:run_voyage:586] 
+📌 System Initialization...
+[2025-09-02 17:45:49.200] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting System Initialization...
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:172] [INIT] Initializing Card G4 system...
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:182] [INIT] Environment configured:
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:183]   - Coaching: ENABLED
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:184]   - Learning Phase: 1 (Exploration)
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:185]   - Max Rounds: 5
+[2025-09-02 17:45:49.200] INFO     [M1_VOYAGE:initialize_system:186]   - Gemini Model: gemini-2.5-pro
+[2025-09-02 17:45:49.304] INFO     [M1_VOYAGE:wrapper:132] [PERF] System Initialization: 105.52ms | Memory: 17.9MB (+0.0MB) | CPU: 11.3%
+[2025-09-02 17:45:49.305] INFO     [M1_VOYAGE:run_voyage:586] 
+📌 Database Connection...
+[2025-09-02 17:45:49.405] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Database Connection...
+[2025-09-02 17:45:49.405] INFO     [M1_VOYAGE:connect_database:199] [DB] Connecting to PostgreSQL...
+[2025-09-02 17:45:49.508] ERROR    [M1_VOYAGE:connect_database:246] [DB] Connection failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "zelda_arsredovisning" does not exist
+
+[2025-09-02 17:45:49.612] INFO     [M1_VOYAGE:wrapper:132] [PERF] Database Connection: 203.37ms | Memory: 29.1MB (+11.2MB) | CPU: 12.4%
+[2025-09-02 17:45:49.612] INFO     [M1_VOYAGE:run_voyage:586] 
+📌 Orchestrator Loading...
+[2025-09-02 17:45:49.718] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Orchestrator Loading...
+[2025-09-02 17:45:49.718] INFO     [M1_VOYAGE:load_orchestrator:253] [ORCHESTRATOR] Loading Golden Orchestrator...
+[2025-09-02 17:45:49.723] WARNING  [M1_VOYAGE:load_orchestrator:268] [ORCHESTRATOR] ⚠️ Coach not initialized - coaching disabled
+[2025-09-02 17:45:49.828] INFO     [M1_VOYAGE:wrapper:132] [PERF] Orchestrator Loading: 110.60ms | Memory: 30.8MB (+1.8MB) | CPU: 23.7%
+[2025-09-02 17:45:49.828] INFO     [M1_VOYAGE:run_voyage:586] 
+📌 PDF Loading...
+[2025-09-02 17:45:49.933] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting PDF Loading...
+[2025-09-02 17:45:49.934] INFO     [M1_VOYAGE:load_test_pdf:283] [PDF] Loading test document...
+[2025-09-02 17:45:49.935] WARNING  [M1_VOYAGE:load_test_pdf:302] [PDF] Test PDF not found - using mock data
+[2025-09-02 17:45:50.035] INFO     [M1_VOYAGE:wrapper:132] [PERF] PDF Loading: 106.44ms | Memory: 30.8MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.035] INFO     [M1_VOYAGE:run_voyage:586] 
+📌 Sectionizer...
+[2025-09-02 17:45:50.141] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Sectionizer...
+[2025-09-02 17:45:50.141] INFO     [M1_VOYAGE:run_sectionizer:310] [SECTION] Running enhanced sectionizer...
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:333] [SECTION] Detected 13 sections:
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:335]   - Förvaltningsberättelse (page 3)
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:335]   - Styrelsen (page 4)
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:335]   - Resultaträkning (page 9)
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:335]   - Balansräkning (page 11)
+[2025-09-02 17:45:50.143] INFO     [M1_VOYAGE:run_sectionizer:335]   - Kassaflödesanalys (page 13)
+[2025-09-02 17:45:50.246] INFO     [M1_VOYAGE:wrapper:132] [PERF] Sectionizer: 107.28ms | Memory: 30.9MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.246] INFO     [M1_VOYAGE:run_voyage:598] 
+📌 Agent Mapping...
+[2025-09-02 17:45:50.348] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Agent Mapping...
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:350] [MAP] Mapping sections to agents...
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:359] [MAP] Activated 14 agents:
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:362]   - maintenance_events_agent: ['Förvaltningsberättelse']
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:362]   - governance_agent: ['Förvaltningsberättelse', 'Styrelsen']
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:362]   - property_agent: ['Förvaltningsberättelse']
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:362]   - income_statement_agent: ['Resultaträkning']
+[2025-09-02 17:45:50.349] INFO     [M1_VOYAGE:map_sections_to_agents:362]   - balance_sheet_agent: ['Balansräkning']
+[2025-09-02 17:45:50.454] INFO     [M1_VOYAGE:wrapper:132] [PERF] Agent Mapping: 102.71ms | Memory: 30.9MB (+0.0MB) | CPU: 0.0%
+[2025-09-02 17:45:50.454] INFO     [M1_VOYAGE:run_voyage:602] 
+📌 Extraction with Coaching...
+[2025-09-02 17:45:50.557] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Extraction with Coaching...
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:377] [EXTRACT] Starting extraction with coaching...
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:392] [AGENT:maintenance_events_agent] Starting extraction
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:398] [AGENT:maintenance_events_agent] Initial extraction: 2 fields
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:399] [AGENT:maintenance_events_agent] Initial accuracy: 65.00%
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:392] [AGENT:governance_agent] Starting extraction
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:398] [AGENT:governance_agent] Initial extraction: 4 fields
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:399] [AGENT:governance_agent] Initial accuracy: 65.00%
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:392] [AGENT:property_agent] Starting extraction
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:398] [AGENT:property_agent] Initial extraction: 2 fields
+[2025-09-02 17:45:50.557] INFO     [M1_VOYAGE:run_extraction_with_coaching:399] [AGENT:property_agent] Initial accuracy: 65.00%
+[2025-09-02 17:45:50.663] INFO     [M1_VOYAGE:wrapper:132] [PERF] Extraction with Coaching: 103.02ms | Memory: 30.9MB (+0.0MB) | CPU: 27.2%
+[2025-09-02 17:45:50.663] INFO     [M1_VOYAGE:run_voyage:606] 
+📌 Storing Results...
+[2025-09-02 17:45:50.767] DEBUG    [M1_VOYAGE:wrapper:115] [PERF] Starting Results Storage...
+[2025-09-02 17:45:50.767] INFO     [M1_VOYAGE:store_results:504] [STORE] Storing results...
+[2025-09-02 17:45:50.767] ERROR    [M1_VOYAGE:store_results:563] [STORE] Failed: Object of type datetime is not JSON serializable
+[2025-09-02 17:45:50.868] INFO     [M1_VOYAGE:wrapper:132] [PERF] Results Storage: 104.42ms | Memory: 30.9MB (+0.0MB) | CPU: 24.6%
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:613] 
+================================================================================
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:614] 🏁 MAIDEN VOYAGE COMPLETE
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:615] ================================================================================
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:618] 
+📋 VALIDATION SUMMARY:
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ✅ environment_set: True
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ❌ database_connected: False
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ❌ coach_initialized: False
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ✅ orchestrator_loaded: True
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ❌ pdf_loaded: False
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ✅ sections_detected: True
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ✅ agents_mapped: True
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ✅ extraction_complete: True
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:624]   ❌ results_stored: False
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:626] 
+  Total: 5/9 checks passed (56%)
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:629] 
+⚡ PERFORMANCE SUMMARY:
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:630]   Total duration: 1.77 seconds
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   System Initialization: 105.52ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Database Connection: 203.37ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Orchestrator Loading: 110.60ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   PDF Loading: 106.44ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Sectionizer: 107.28ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Agent Mapping: 102.71ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Extraction with Coaching: 103.02ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:633]   Results Storage: 104.42ms
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:637] 
+🎯 SUCCESS LEVEL: NEEDS WORK
+[2025-09-02 17:45:50.869] INFO     [M1_VOYAGE:run_voyage:644] ❌ Significant issues detected - fixes required before proceeding
+[2025-09-02 17:45:50.870] INFO     [M1_VOYAGE:main:671] 
+📊 Final results saved to: /tmp/m1_voyage_final_20250902_174550.json

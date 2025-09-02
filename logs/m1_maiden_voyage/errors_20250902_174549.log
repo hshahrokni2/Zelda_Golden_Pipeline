@@ -1,0 +1,5 @@
+[2025-09-02 17:45:49.508] ERROR    [M1_VOYAGE:connect_database:246] [DB] Connection failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "zelda_arsredovisning" does not exist
+
+[2025-09-02 17:45:49.723] WARNING  [M1_VOYAGE:load_orchestrator:268] [ORCHESTRATOR] ⚠️ Coach not initialized - coaching disabled
+[2025-09-02 17:45:49.935] WARNING  [M1_VOYAGE:load_test_pdf:302] [PDF] Test PDF not found - using mock data
+[2025-09-02 17:45:50.767] ERROR    [M1_VOYAGE:store_results:563] [STORE] Failed: Object of type datetime is not JSON serializable
