@@ -226,7 +226,7 @@ python3 -c "import torch; torch.cuda.empty_cache()"
 ## 📝 FOR NEXT CLAUDE SESSION
 
 ### Context Restoration Steps:
-1. **Read Quadruple MDs** in order (MD1→MD2→MD3→MD4)
+1. **Read Complete MD Chain** in order (MD0→MD1→MD2→MD3→MD4)
 2. **Check System Status**:
    ```bash
    ssh -p 26983 -i ~/.ssh/BrfGraphRag root@45.135.56.10
@@ -243,9 +243,10 @@ python3 -c "import torch; torch.cuda.empty_cache()"
 4. **Continue Learning**: Run appropriate phase script
 
 ### Key Files to Remember:
+- **Recovery Entry**: `docs/MD0_AMNESIA_RECOVERY.md` (START HERE)
 - **Test Script**: `h100_native_maiden_voyage.py` (with Card G4 fix)
 - **Environment**: `/tmp/golden_fortress_env.sh`
-- **Documentation**: `docs/MD[1-4]_*.md`
+- **Documentation**: `docs/MD[0-4]_*.md` (complete chain)
 - **Monitoring**: `coaching/coaching_monitor.py`
 
 ---
